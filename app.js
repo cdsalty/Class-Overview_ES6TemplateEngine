@@ -1,6 +1,3 @@
-console.log('Time is now: ', Date.now());
-console.log("This is the first line of defense. It's a middleware function.");
-
 const http = require('http');
 const express = require('express');
 const templateEngine = require('express-es6-template-engine');
