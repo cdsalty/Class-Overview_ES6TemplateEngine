@@ -1,40 +1,45 @@
-const http = require("http");
-const express = require("express");
-const templateEngine = require("express-es6-template-engine");
+const http = require('http');
+const express = require('express');
+const templateEngine = require('express-es6-template-engine');
 const app = express();
-app.engine("html", templateEngine);
-app.set("views", "templates"); // tells the server all the files needed for view will be in here.
-app.set("view engine", "html");
+app.engine('html', templateEngine);
+app.set('views', 'templates');
+app.set('view engine', 'html');
 
 const cats = [
   {
-    id: "cwn",
-    name: "Catwoman",
+    id: 'abys',
+    name: 'absynian',
   },
   {
-    id: "cldy",
-    name: "CatLady",
+    id: 'abys1',
+    name: 'absynian one',
   },
 ];
 
-app.get("/", (req, res) => {
-  res.render("homepage");
-});
-
-app.get("/cats", (req, res) => {
-  res.render("catlist", {
-    locals: {
-      cats,
+app.get('/', (req, res) => {
+  res.render('homepage', {
+    partials: {
+      header: 'partials/header',
     },
   });
 });
 
-app.get("/cats/:catId", (req, res) => {
-  const catId = req.params["catId"];
-  console.log(catId);
-  const cat = cats.find((cat) => cat.id === catId);
-  console.log(cat);
-  res.render("catinfo", {
+app.get('/cats', (req, res) => {
+  res.render('catlist', {
+    locals: {
+      cats,
+    },
+    partials: {
+      header: 'partials/header',
+    },
+  });
+});
+
+app.get('/cats/:catId', (req, res) => {
+  const catId = req.params['catId'];
+  const cat = cats.find((c) => c.id == catId);
+  res.render('catinfo', {
     locals: {
       cat,
     },
@@ -42,4 +47,6 @@ app.get("/cats/:catId", (req, res) => {
 });
 
 const server = http.createServer(app);
-server.listen(3000, () => console.log("Server is running on port 3000"));
+server.listen(3000, '127.0.0.1', () => {
+  console.log('Server started');
+});
